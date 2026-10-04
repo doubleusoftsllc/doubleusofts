@@ -1,0 +1,626 @@
+/* -----------------------------
+   Theme + base
+----------------------------- */
+:root{
+  --bg: #0b0f14;
+  --fg: rgba(255,255,255,.92);
+  --muted: rgba(255,255,255,.62);
+  --muted2: rgba(255,255,255,.40);
+  --card: rgba(255,255,255,.04);
+  --border: rgba(255,255,255,.10);
+  --ring: rgba(255,255,255,.10);
+  --shadow: 0 20px 60px rgba(0,0,0,.25);
+  --shadow2: 0 12px 30px rgba(0,0,0,.25);
+  --header-bg: rgba(8, 12, 18, 0.85);
+  --header-border: rgba(255,255,255,.10);
+  --logo-bg: color-mix(in srgb, var(--card) 90%, transparent);
+  --logo-border: var(--border);
+
+  --logo-bg: color-mix(in srgb, var(--card) 90%, transparent);
+  --logo-border: var(--border);
+  --radius: 16px;
+  --radius2: 20px;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  --primary: rgba(140, 180, 255, .9);
+  --blur: blur(12px);
+}
+
+html[data-theme="light"]{
+  --bg: #eef1f4;
+  --fg: rgba(10,15,20,.92);
+  --muted: rgba(10,15,20,.62);
+  --muted2: rgba(10,15,20,.42);
+  --card: rgba(255,255,255,.65);
+  --border: rgba(10,15,20,.10);
+  --ring: rgba(10,15,20,.10);
+  --shadow: 0 18px 50px rgba(10,15,20,.10);
+  --shadow2: 0 10px 26px rgba(10,15,20,.10);
+  --header-bg: rgba(255, 255, 255, 0.85);
+  --header-border: rgba(10,15,20,.10);
+  --logo-bg: #ffffff;
+  --logo-border: #ddd;
+
+  --logo-bg: #ffffff;
+  --logo-border: #ddd;
+}
+
+*{ box-sizing:border-box; }
+html, body { height: 100%; }
+body{
+  margin:0;
+  font-family: var(--sans);
+  color: var(--fg);
+  background: var(--bg);
+  transition: background .25s ease, color .25s ease;
+}
+
+a{ color: inherit; text-decoration: none; }
+a:focus-visible, button:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 3px var(--ring);
+  border-radius: 12px;
+}
+
+.page{
+  min-height: 100vh;
+  padding-bottom: 120px; /* space for dock */
+}
+
+/* ===============================
+   Header Section
+================================= */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 50px 0;
+  margin-bottom: 50px;
+
+  color: color-mix(in srgb, var(--muted) 80%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border-bottom: 1px solid var(--header-border);
+  transition: all 0.3s ease;
+}
+
+/* Logo Container */
+
+.scroll-target {
+  height: 1px;
+}
+
+/* This is the KEY fix for sticky headers */
+#top {
+  scroll-margin-top: 120px;
+}
+
+/* Make logo container hold stacked logos */
+.header-logo{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Stack both logos on top of each other */
+.header-logo img{
+  position: absolute;
+  width: 180px;      /* adjust if needed */
+  height: auto;
+}
+
+/* Default theme (your :root = dark) */
+.logo-light{ display: none; }
+.logo-dark{ display: block; }
+
+/* Light theme */
+html[data-theme="light"] .logo-light{ display: block; }
+html[data-theme="light"] .logo-dark{ display: none; }
+
+html{
+  scroll-behavior: smooth;
+}
+
+/* Push scroll target below sticky header */
+#top{
+  scroll-margin-top: 120px; /* adjust to your header height */
+}
+
+
+/* Subtle Hover Effect */
+.header-logo:hover {
+  box-shadow: 0 0 0 6px rgba(0,0,0,0.04);
+  transform: translateY(-3px);
+}
+
+
+/* -----------------------------
+   Section layout
+----------------------------- */
+.section{
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.section__label{
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .02em;
+  text-transform: lowercase;
+  color: color-mix(in srgb, var(--muted) 80%, transparent);
+  opacity: .9;
+}
+
+.section__label::before{
+  content:"/";
+  margin-right: 0px;
+}
+
+.section__content{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (min-width: 640px){
+  .section{
+    grid-template-columns: 75px 1fr;
+    align-items: baseline;
+    gap: 22px;
+    padding: 24px 28px;
+  }
+  .section__label{
+    text-align: right;
+    padding-top: 6px;
+  }
+}
+
+/* -----------------------------
+   Header
+----------------------------- */
+.header{
+  padding-top: 0px;
+  padding-bottom: 8px;
+}
+
+.header__content{
+  gap: 14px;
+}
+
+.avatar{
+  width: 96px;
+  height: 96px;
+  border-radius: 999px;
+  object-fit: cover;
+  user-select: none;
+  border: 4px solid color-mix(in srgb, var(--border) 60%, transparent);
+  outline: 2px solid color-mix(in srgb, var(--bg) 80%, transparent);
+  box-shadow: var(--shadow2);
+}
+
+.headline{
+  margin: 0;
+  font-weight: 800;
+  font-size: 34px;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+/* Reveal animation (name) */
+.reveal span{
+  display: inline-block;
+  opacity: 0;
+  transform: translateX(-6px);
+  animation: letterIn .55s ease forwards;
+}
+@keyframes letterIn{
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* -----------------------------
+   Prose / pills
+----------------------------- */
+.prose{
+  max-width: 540px;
+  color: var(--muted);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+.prose p{ margin: 0; }
+
+.pill{
+  display:inline-block;
+  font-size: 13px;
+  padding: 3px 8px;
+  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+  color: var(--muted);
+  transform: translateY(-1px);
+  margin: 0 3px;
+}
+
+.pill--green{ background: rgba(90, 220, 160, .20); }
+.pill--purple{ background: rgba(170, 130, 255, .18); }
+.pill--amber{ background: rgba(255, 205, 120, .20); }
+
+/* -----------------------------
+   Socials
+----------------------------- */
+.socials {
+  display: flex;
+  flex-direction: row;   /* ← this makes them horizontal */
+  align-items: center;
+  gap: 30px;
+}
+
+
+.social{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  color: var(--muted);
+  transition: color .2s ease;
+}
+
+.icon-btn{
+  width: 32px;
+  height: 32px;
+  display:grid;
+  place-items:center;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--card) 80%, transparent),
+    color-mix(in srgb, var(--card) 20%, transparent)
+  );
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.social:hover,
+.social:focus-visible{
+  color: var(--fg);
+}
+
+.social:hover .icon-btn,
+.social:focus-visible .icon-btn{
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 25%, transparent);
+}
+
+/* -----------------------------
+   Payments
+----------------------------- */
+/* Payments Section Layout */
+
+.payment-icon img {
+  width: 20px;     /* same size as previous SVG */
+  height: 20px;
+  object-fit: contain;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: linear-gradient(135deg, 
+color-mix(in srgb, var(--card) 80%, transparent), 
+color-mix(in srgb, var(--card) 20%, transparent));
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+
+.payments-section {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  align-items: center;
+  gap: 20px;
+  max-width: 700px;
+  margin: 40px auto;
+}
+
+/* Section Label (same size as socials) */
+.payments-label {
+ font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .02em;
+  text-transform: lowercase;
+  color: color-mix(in srgb, var(--muted) 80%, transparent);
+  opacity: .9;
+}
+
+.payments-label::before {
+  content: "/";
+}
+
+/* Horizontal layout */
+.payments-list {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+/* Payment item text size FIXED */
+.payment-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: #666;
+  font-size: 16px;   /* match socials */
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+/* Icon size FIXED to match socials */
+.payment-icon {
+      width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: linear-gradient(135deg, 
+color-mix(in srgb, var(--card) 80%, transparent), 
+color-mix(in srgb, var(--card) 20%, transparent));
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.payment-icon svg {
+  width: 18px;      /* same svg size as socials */
+  height: 18px;
+}
+
+.payment-item:hover {
+  color: #111;
+}
+
+.payment-item:hover .payment-icon {
+  box-shadow: 0 0 0 4px rgba(0,0,0,0.05);
+  transform: translateY(-2px);
+}
+
+/* -----------------------------
+   Projects
+----------------------------- */
+.projects{
+  position: relative;
+  border-radius: var(--radius2);
+}
+
+.projects__grid{
+  display: grid;
+  gap: 14px;
+}
+
+@media (min-width: 600px){
+  .projects__grid{
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Collapse container (Show more effect) */
+.projects__grid.is-collapsed{
+  max-height: 300px; /* shows ~4 cards */
+  overflow: hidden;
+  transition: max-height .35s ease;
+}
+.projects__grid.is-expanded{
+  max-height: 1200px;
+  overflow: hidden;
+  transition: max-height .45s ease;
+}
+
+.projects__fade{
+  position:absolute;
+  left:0; right:0; bottom: 44px;
+  height: 120px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .25s ease;
+  background: linear-gradient(to top, var(--bg), color-mix(in srgb, var(--bg) 0%, transparent));
+}
+
+.projects__fade.is-visible{ opacity: 1; }
+
+.projects__toggle{
+  display:flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.btn{
+  cursor:pointer;
+  border: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
+  background: color-mix(in srgb, var(--card) 85%, transparent);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  display:flex;
+  gap: 8px;
+  align-items:center;
+  transition: transform .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.btn:hover{
+  transform: translateY(-1px);
+  color: var(--fg);
+  border-color: color-mix(in srgb, var(--border) 100%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+/* Card */
+.card{
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card) 90%, transparent);
+  box-shadow: none;
+  padding: 14px 14px 12px;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  isolation: isolate;
+}
+
+.card:hover{
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--border) 130%, transparent);
+  box-shadow: var(--shadow2);
+}
+
+.card__top{
+  display:flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.card__kicker{
+  font-size: 12px;
+  color: color-mix(in srgb, var(--muted) 85%, transparent);
+}
+
+.card__title{
+  margin: 10px 0 2px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.card__ext{
+  width: 22px;
+  height: 22px;
+  display:grid;
+  place-items:center;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  background: color-mix(in srgb, var(--card) 70%, transparent);
+  transition: color .2s ease, transform .2s ease;
+}
+.card:hover .card__ext{ color: var(--fg); transform: translateY(-1px); }
+
+/* tint overlay */
+.card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity: .5;
+  mix-blend-mode: overlay;
+  background: var(--tint, linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,0)));
+  z-index: -1;
+}
+
+/* -----------------------------
+   Dock
+----------------------------- */
+.dock-wrap{
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 18px;
+  pointer-events: none;
+}
+
+.dock{
+  pointer-events: auto;
+  margin: 0 auto;
+  width: max-content;
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 18px;
+  border: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+  background: color-mix(in srgb, var(--card) 70%, transparent);
+  backdrop-filter: var(--blur);
+  box-shadow: var(--shadow);
+}
+
+.dock__item{
+  position: relative;
+  border: none;
+  background: transparent;
+  color: var(--fg);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+
+.dock__item:hover{
+  transform: scale(1.08);
+  background: color-mix(in srgb, var(--card) 90%, transparent);
+}
+
+.dock__sep{
+  width: 1px;
+  height: 40px;
+  background: var(--border);
+  opacity: .6;
+}
+
+.dock__icon{ display:grid; place-items:center; }
+
+/* Tooltip (CSS only using data-tooltip) */
+.dock__item::before{
+  content: attr(data-tooltip);
+  position:absolute;
+  bottom: 54px;
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  opacity: 0;
+  pointer-events: none;
+  padding: 6px 8px;
+  border-radius: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--fg);
+  background: color-mix(in srgb, var(--card) 92%, transparent);
+  border: 1px solid var(--border);
+  backdrop-filter: var(--blur);
+  transition: opacity .15s ease, transform .15s ease;
+  white-space: nowrap;
+}
+
+.dock__item:hover::before,
+.dock__item:focus-visible::before{
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Small page entrance */
+.section{
+  animation: riseIn .45s ease both;
+  animation-delay: calc(var(--i, 0) * 80ms);
+}
+@keyframes riseIn{
+  from{ opacity:0; transform: translateY(8px); }
+  to{ opacity:1; transform: translateY(0); }
+}
+
+/* DoubleU Softs brand and responsive refinements */
+.wordmark{position:absolute;display:flex;align-items:center;gap:10px;white-space:nowrap;color:var(--fg);font-size:22px;font-weight:750;letter-spacing:-.7px}
+.brand-symbol{font-size:38px;line-height:1;font-weight:850;color:#ffa52c;letter-spacing:-5px;margin-right:4px}
+.accent{color:#ffa52c}.brand-avatar{display:flex;align-items:center;justify-content:center;font-size:52px;font-weight:850;letter-spacing:-5px;background:var(--card)}.brand-avatar span{color:#ffa52c;margin-left:2px}
+.section__label{font-size:14px;color:var(--muted);opacity:1}.section__content{min-width:0}.section{scroll-margin-top:120px}.header .section__label::before{content:none}
+.socials{flex-wrap:wrap;row-gap:16px}.pill{font-size:14px}.btn{font-size:14px}.card{font:inherit;color:var(--fg);cursor:pointer;text-align:left;width:100%}.card__title{display:block;font-size:20px}.card__kicker{font-size:14px}.card__ext{flex-shrink:0;font-size:18px}.card__top{align-items:center}.backend-icon{color:#8fbaff;font-family:var(--mono)}.ai-icon{color:#b191ff;font-size:22px}
+.projects__grid.is-collapsed,.projects__grid.is-expanded{max-height:none;overflow:visible}.card[hidden]{display:none}.projects__fade{display:none}.contact-link{width:fit-content;color:var(--fg);border-bottom:1px solid #ffa52c;padding-bottom:3px;margin-top:6px}.contact-link:hover{color:#ffa52c}.footer-copy{font-size:13px;color:var(--muted)}
+.dock-wrap{z-index:1100}.dock__item::before{font-size:12px;background:var(--bg)}
+a:focus-visible,button:focus-visible{outline:2px solid #ffa52c;outline-offset:4px}
+dialog{position:fixed;background:var(--bg);color:var(--fg);border:1px solid var(--border);border-radius:20px;width:min(520px,calc(100% - 32px));padding:32px;box-shadow:var(--shadow);max-height:80vh;overflow:auto}dialog::backdrop{background:rgba(0,0,0,.65);backdrop-filter:blur(6px)}dialog h2{font-size:26px;margin:12px 0}dialog p,dialog li{color:var(--muted);line-height:1.6}dialog ul{padding-left:22px;margin:18px 0 24px}.dialog-label{font:14px var(--mono)}.dialog-close{position:absolute;right:15px;top:12px;border:0;background:transparent;color:var(--fg);font-size:28px;cursor:pointer;width:40px;height:40px}dialog .btn{width:fit-content}
+@media(max-width:639px){.site-header{padding:40px 0;margin-bottom:34px}.headline{font-size:32px}.header{padding-top:0}.socials{gap:20px}.dock{gap:4px;padding:8px}.dock__item{width:42px}.section__label{margin:0}.section{scroll-margin-top:100px}.projects__grid{grid-template-columns:1fr}.expertise-list{column-gap:20px}.card__kicker{font-size:14px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.reveal span{opacity:1;transform:none}}
